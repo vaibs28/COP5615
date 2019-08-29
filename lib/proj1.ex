@@ -1,6 +1,9 @@
 defmodule Proj1 do
   def start(_args,_type) do
-    printVampireNumbers()
+    startTime = System.monotonic_time(:millisecond)
+    printBetweenN1andN2()
+    endTime = System.monotonic_time(:millisecond);
+    IO.puts(endTime-startTime)
     children = []
     Supervisor.start_link(children, strategy: :one_for_one)
   end
@@ -31,14 +34,17 @@ defmodule Proj1 do
       true
     end
   end
-  def printVampireNumbers() do
-    start = 1000
-    #last = 200000
+
+  def printBetweenN1andN2() do
+    n1 = 100000
+    n2 = 200000
+    Enum.each(n1..n2,fn(s)-> printVampireNumbers(s) end)
+  end
+  def printVampireNumbers(n1) do
+    start = n1
     len = String.length(Integer.to_string(start))
     if rem(len,2)===0 do
       fangLength = div(len,2)
-      #listOfDigits = String.codepoints(Integer.to_string(start))
-      #IO.puts(listOfDigits)
       low = :math.pow(10,fangLength-1)
       low = round(low)
       high = :math.sqrt(start)

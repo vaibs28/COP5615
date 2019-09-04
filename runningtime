@@ -1,19 +1,19 @@
-For batch 4 - Run1  3000 sleep  
-real    0m3.527s        
-user    0m6.244s
-sys     0m0.247s
+For batch 4 - Run1
+real    0m2.787s
+user    0m8.196s
+sys     0m0.202s
+cpu time/real time =  3.013
 
-Run2 - 3000 sleep
-real    0m3.457s
-user    0m6.161s
-sys     0m0.208s
+Run2
+real    0m2.809s
+user    0m8.257s
+sys     0m0.222s
+cpu time/real time =  3.018
 
-Run3 with 2800 sleep
-real    0m3.406s
-user    0m6.305s
-sys     0m0.268s
+Run3
+real    0m2.775s
+user    0m8.242s
+sys     0m0.248s
+cpu time/real time = 3.059
 
-Run4
-real    0m3.259s
-user    0m6.245s
-sys     0m0.231s
+Avg ratio = 3.03

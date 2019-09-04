@@ -10,18 +10,24 @@ defmodule ProjSupervisor do
   def init([low, high]) do
     # calling Worker module
     IO.puts("in supervisor init")
-    chunkSize = div(high - low, 4)
-    range = 0..3
 
-    # children = [worker(Worker, [])]
+    chunks = 4
+    chunkSize = div(high - low, chunks)
+    range = 0..(chunks - 1)
 
-    Enum.map(range, fn s ->
+    pids = Enum.map(range, fn s ->
       spawn_link(Worker, :init, [low + s * chunkSize, low + (s + 1) * chunkSize, s])
     end)
 
-    :timer.sleep(5_000)
+    let_it_complete(pids)
+  end
 
-    # supervise(children, strategy: :one_for_one)
-
+  def let_it_complete(pids) do
+    if (pids |> length == 0) do
+      nil
+    else
+      completed_process = Enum.filter(pids, fn pid -> not Process.alive?(pid) end)
+      let_it_complete(pids -- completed_process)
+    end
   end
 end

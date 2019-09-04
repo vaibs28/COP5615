@@ -1,33 +1,43 @@
 # Proj1
+Steps to Run
+ Run the project using the command - mix run proj1.exs <arg1> <arg2>
+ To see the running time use - time mix run proj1.exs <arg1> <arg2>
 
-1. Problem definition
+1. Group Members
+   Vaibhav Mohan Sahay - 54541830
+   Madhav Sodhani 
 
-An interesting kind of number in mathematics is vampire number (Links to an external site.). A vampire number is a composite (Links to an external site.) natural number (Links to an external site.) with an even number of digits, that can be factored into two natural numbers each with half as many digits as the original number and not both with trailing zeroes, where the two factors contain precisely all the digits of the original number, in any order, counting multiplicity.  A classic example is: 1260= 21 x 60.
+2. Number of Worker actors created - 4, 1 running per core
 
-A vampire number can have multiple distinct pairs of fangs. A vampire numbers with 2 pairs of fangs is: 125460 = 204 × 615 = 246 × 510.
+3. Size of work unit that each actor handles - (high-low)/4
+   For the problem between 100000 to 200000, the chunk size = (200000-100000)/4 i.e. 25000
 
-The goal of this first project is to use Elixir and the actor model to build a good solution to this problem that runs well on multi-core machines.
+4.
 
- 
-2. Requirements
+5. Running Time
 
-Input: The input provided (as command line to your program, e.g. my_app) will be two numbers: N1 and N2. The overall goal of your program is to find all vampire numbers starting at N1 and up to N2.
+For batch 4 - Run1
+real    0m2.787s
+user    0m8.196s
+sys     0m0.202s
+cpu time/real time =  3.013
 
-Output: Print, on independent lines, first the number then its fangs. If there are multiple fangs list all of them next to each other like it’s shown in the example below.
+Run2
+real    0m2.809s
+user    0m8.257s
+sys     0m0.222s
+cpu time/real time =  3.018
 
-Your File name should be proj1.
+Run3
+real    0m2.775s
+user    0m8.242s
+sys     0m0.248s
+cpu time/real time = 3.059
 
-Example 1:
+Avg ratio = 3.03
 
-mix run proj1.exs 100000 200000
-
-125460 204 615 246 510
-
-This output indicates that a vampire number between 100000 and 200000 is 125460 and its possible pair of fangs are: 204, 615 and 246, 510.
-
-
-## Installation
-
-1. Run the project using the command - mix run proj1.exs <arg1> <arg2>
-2. To see the running time use - time mix run proj1.exs <arg1> <arg2>
-
+6. The largest problem solved 
+10000000 to 20000000
+Real time - 23 minutes
+CPU time - 83 minutes 
+CPU time/Real time - 3.57

@@ -6,25 +6,21 @@ defmodule Worker do
     GenServer.start_link(__MODULE__, [low, high])
   end
 
-  def init(low, high, process_number) do
-    IO.puts("in init/[] - #{low} #{high}, process #{process_number}")
-    # start_link(low, high)
-    printVampireNumbers(low, high, process_number)
+  def init(low, high) do
+    printVampireNumbers(low, high)
   end
 
   def start_link() do
-    IO.puts("in start_link/0")
-    # :timer.sleep(2800)
   end
 
-  def printVampireNumbers(n1, n2, process_number) do
+  def printVampireNumbers(n1, n2) do
     Enum.each(
       n1..n2,
-      fn s -> getVampireNumbers(s, process_number) end
+      fn s -> getVampireNumbers(s) end
     )
   end
 
-  def getVampireNumbers(n1, process_number) do
+  def getVampireNumbers(n1) do
     start = n1
     len = String.length(Integer.to_string(start))
 
@@ -42,7 +38,7 @@ defmodule Worker do
           :ok ->
             # b
 
-            IO.puts("#{start}" <> " " <> "#{b}, process number: #{process_number}")
+            IO.puts("#{start}" <> " " <> "#{b}")
 
           :error ->
             []

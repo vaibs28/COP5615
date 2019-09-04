@@ -6,7 +6,7 @@
     "configurations": [
         {
             "type": "mix_task",
-            "name": "mix (Default task)",
+            "name": "mix",
             "request": "launch",
             "projectDir": "${workspaceRoot}"
         },

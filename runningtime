@@ -1,0 +1,19 @@
+For batch 4 - Run1  3000 sleep  
+real    0m3.527s        
+user    0m6.244s
+sys     0m0.247s
+
+Run2 - 3000 sleep
+real    0m3.457s
+user    0m6.161s
+sys     0m0.208s
+
+Run3 with 2800 sleep
+real    0m3.406s
+user    0m6.305s
+sys     0m0.268s
+
+Run4
+real    0m3.259s
+user    0m6.245s
+sys     0m0.231s

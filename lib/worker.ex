@@ -1,94 +1,79 @@
 defmodule Worker do
   use GenServer
 
-  def start_link(low, high) do
-    IO.puts("in start_link" <> "#{low}" <> " " <> "#{high}")
-    GenServer.start_link(__MODULE__, [low, high])
-  end
-
   def init(low, high) do
-    printVampireNumbers(low, high)
-  end
-
-  def start_link() do
-  end
-
-  def printVampireNumbers(n1, n2) do
     Enum.each(
-      n1..n2,
-      fn s -> getVampireNumbers(s) end
+      low..high,
+      fn (current) ->
+        result = fangs(current)
+        if (result != "") do
+          IO.puts Integer.to_string(current) <> " " <> result
+        end
+      end
     )
   end
 
-  def getVampireNumbers(n1) do
-    start = n1
-    len = String.length(Integer.to_string(start))
+  def fangs(input) do
+    input_as_array = input
+                     |> Integer.digits()
+                     |> Enum.sort()
 
-    if rem(len, 2) === 0 do
-      fangLength = div(len, 2)
-      low = :math.pow(10, fangLength - 1)
-      low = round(low)
-      high = :math.sqrt(start)
-      high = round(high)
+    length_of_input = input_as_array
+                      |> length
 
-      Enum.each(low..high, fn fang1 ->
-        {a, b} = getFangs(start, fang1)
+    if (rem(length_of_input, 2) != 0) do
+      raise "Input length should be event"
+    end
 
-        case a do
-          :ok ->
-            # b
+    power = length_of_input / 2 - 1;
+    first = round(:math.pow(10, power))
+    last = round(:math.sqrt(input))
 
-            IO.puts("#{start}" <> " " <> "#{b}")
+    first..last
+    |> Enum.reduce "", fn current, acc ->
+      {a, b} = find_fangs(current, input, input_as_array)
 
-          :error ->
-            []
-        end
-      end)
+      if (a === :ok) do
+        acc <> " " <> b
+      else
+        acc
+      end
     end
   end
 
-  def getFangs(start, fang1) do
+  defp find_fangs(fang1, input_as_integer, input_as_array) do
     error_return = {:error, ""}
+    if (rem(input_as_integer, fang1) == 0) do
+      fang2 = round(input_as_integer / fang1)
 
-    if rem(start, fang1) === 0 do
-      fang2 = div(start, fang1)
+      if (rem(fang1, 10) != 0 or rem(fang2, 10) != 0) do
+        if (
+             fang2
+             |> Integer.to_string()
+             |> String.length() == (
+               input_as_array
+               |> length) / 2) do
+          current_as_array = fang1
+                             |> Integer.digits()
+          result_as_array = fang2
+                            |> Integer.digits()
+          combined = current_as_array ++ result_as_array
+                     |> Enum.sort()
 
-      if fangCheck(start, fang1, fang2) == true do
-        result = Integer.to_string(fang1) <> " " <> Integer.to_string(fang2)
-        {:ok, result}
+          if (input_as_array -- combined
+              |> length() == 0) do
+            {:ok, Integer.to_string(fang1) <> " " <> Integer.to_string(fang2)}
+          else
+            error_return
+          end
+        else
+          error_return
+        end
       else
         error_return
       end
     else
       error_return
     end
-  end
-
-  def fangCheck(n, f1, f2) do
-    if lengthOfInt(f1) != lengthOfInt(n) / 2 || lengthOfInt(f2) != lengthOfInt(n) / 2 ||
-         (rem(f1, 10) === 0 && rem(f2, 10) === 0) do
-      []
-    end
-
-    if rem(f1, 10) == 0 && rem(f2, 10) == 0 do
-      false
-    else
-      originalDigits = String.codepoints(Integer.to_string(n))
-      originalSorted = Enum.sort(originalDigits)
-      f1 = Integer.to_string(f1)
-      f2 = Integer.to_string(f2)
-      fangs = f1 <> f2
-      fangs = String.to_integer(fangs)
-      fangDigits = String.codepoints(Integer.to_string(fangs))
-      fangSorted = Enum.sort(fangDigits)
-
-      if originalSorted == fangSorted do
-        true
-      end
-    end
-  end
-
-  def lengthOfInt(n) do
-    n |> Integer.to_string() |> String.length()
   end
 end

@@ -5,7 +5,6 @@ defmodule ProjSupervisor do
     Supervisor.start_link(__MODULE__, [low, high])
   end
 
-  # runs implicitly when calling start_link()
   def init([low, high]) do
     chunks = 4
     chunk_size = div(high - low, chunks)
@@ -20,6 +19,7 @@ defmodule ProjSupervisor do
       )
 
     let_it_complete(pids)
+    supervise([], strategy: :one_for_one)
   end
 
   def let_it_complete(pids) do
